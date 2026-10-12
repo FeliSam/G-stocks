@@ -1,0 +1,27 @@
+{
+  "name": "g-stock",
+  "version": "1.0.0",
+  "private": true,
+  "description": "G-Stock — Plateforme SaaS universelle et configurable de gestion des stocks",
+  "packageManager": "pnpm@12.11.2",
+  "scripts": {
+    "dev": "corepack pnpm --parallel -r run dev",
+    "build": "corepack pnpm -r run build",
+    "lint": "corepack pnpm -r run lint",
+    "typecheck": "corepack pnpm -r run typecheck",
+    "test": "corepack pnpm -r run test",
+    "db:generate": "corepack pnpm --filter @g-stock/database db:generate",
+    "db:push": "corepack pnpm --filter @g-stock/database db:push",
+    "db:seed": "corepack pnpm --filter @g-stock/database db:seed",
+    "db:local:start": "node infra/scripts/local-pg.mjs start",
+    "db:local:stop": "node infra/scripts/local-pg.mjs stop"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

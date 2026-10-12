@@ -1,0 +1,62 @@
+name: G-Stock CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  verify:
+    name: Install, Typecheck, Test & Build
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: gstock
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: "postgresql://postgres:postgres@localhost:5433/gstock?schema=public"
+      JWT_SECRET: "ci-test-secret-key-minimum-32-characters-long-2026"
+      NEXT_PUBLIC_API_URL: "http://localhost:4000/api/v1"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable Corepack & pnpm
+        run: corepack enable
+
+      - name: Install dependencies
+        run: corepack pnpm install --frozen-lockfile=false
+
+      - name: Generate Prisma Client & Push Schema
+        run: |
+          corepack pnpm db:generate
+          corepack pnpm db:push
+          corepack pnpm db:seed
+
+      - name: Run Typecheck
+        run: corepack pnpm typecheck
+
+      - name: Run Integration & Unit Tests
+        run: corepack pnpm test
+
+      - name: Build Monorepo
+        run: corepack pnpm build

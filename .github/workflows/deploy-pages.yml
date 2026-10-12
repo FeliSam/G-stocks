@@ -1,0 +1,48 @@
+name: Deploy G-Stock Web to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Enable Corepack & pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@9.15.4 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile=false
+
+      - name: Build Shared Packages & Static Next.js Export
+        env:
+          NEXT_PUBLIC_GITHUB_PAGES: "true"
+          NEXT_PUBLIC_BASE_PATH: "/G-stocks"
+        run: |
+          pnpm --filter @g-stock/types build
+          pnpm --filter @g-stock/config build
+          pnpm --filter @g-stock/validation build
+          pnpm --filter @g-stock/ui build
+          pnpm --filter @g-stock/web build
+          touch apps/web/out/.nojekyll
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./apps/web/out
