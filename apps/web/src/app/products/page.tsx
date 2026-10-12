@@ -53,6 +53,18 @@ type ViewMode = "grid" | "table";
 
 const PRESET_PRODUCT_IMAGES = [
   {
+    label: "Voiture / Concession Auto",
+    url: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    label: "Chaussures / Sneakers",
+    url: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    label: "Habit / Prêt-à-porter",
+    url: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=80",
+  },
+  {
     label: "Scanner / Électronique",
     url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80",
   },
@@ -63,14 +75,6 @@ const PRESET_PRODUCT_IMAGES = [
   {
     label: "Colis / Conditionnement",
     url: "https://images.unsplash.com/photo-1607166452427-7e4477079cb9?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    label: "Imprimante / Bureau",
-    url: "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    label: "Outillage / Métrologie",
-    url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
   },
 ];
 
@@ -207,6 +211,9 @@ export default function ProductsPage() {
     { key: "Conditionnement", value: "Unitaire" },
     { key: "Garantie", value: "2 ans" },
   ]);
+  const [variantsList, setVariantsList] = useState<
+    Array<{ sku: string; attr1Key: string; attr1Val: string; attr2Key: string; attr2Val: string }>
+  >([]);
   const [isActive, setIsActive] = useState(true);
 
   // Modal Import CSV
@@ -239,6 +246,133 @@ export default function ProductsPage() {
     setBarcode(prefix + randomPart);
   }
 
+  function applySectorPreset(sector: "AUTO" | "SHOES" | "HABIT" | "STANDARD") {
+    if (sector === "AUTO") {
+      const autoCat = categories.find((c: any) =>
+        String(c.code || "").includes("AUTO")
+      );
+      setSku("AUTO-BERLINE-EV" + Math.floor(10 + Math.random() * 89));
+      setName("Berline Électrique GT 220ch Autonomie 540km");
+      setDescription(
+        "Véhicule neuf garantie constructeur 5 ans. Suivi individuel par numéro de châssis (VIN) et finition."
+      );
+      if (autoCat) setProdCategoryId(autoCat.id);
+      setTrackingMode("SERIAL");
+      setCostPrice("26400");
+      setSalePrice("32900");
+      setReorderLevel("1");
+      setImageUrl(PRESET_PRODUCT_IMAGES[0].url);
+      setBrand("Apex Motors Europe");
+      setSupplierName("Usine Assemblage Centrale");
+      setWeightKg("1680");
+      setDimensionsCm("468 x 185 x 144 cm");
+      setLeadTimeDays("21");
+      setSpecsList([
+        { key: "Motorisation", value: "Électrique 220 ch (Batterie 77 kWh)" },
+        { key: "Transmission", value: "Automatique Intégrale" },
+        { key: "Garantie Constructeur", value: "60 mois / 150 000 km" },
+      ]);
+      setVariantsList([
+        {
+          sku: "VIN-VF1-GT220-001",
+          attr1Key: "Couleur",
+          attr1Val: "Gris Titane Métallisé",
+          attr2Key: "Châssis VIN",
+          attr2Val: "VF1-GT220-90112",
+        },
+        {
+          sku: "VIN-VF1-GT220-002",
+          attr1Key: "Couleur",
+          attr1Val: "Blanc Nacré Perle",
+          attr2Key: "Châssis VIN",
+          attr2Val: "VF1-GT220-90113",
+        },
+      ]);
+    } else if (sector === "SHOES") {
+      const shoeCat = categories.find((c: any) =>
+        String(c.code || "").includes("SHOE")
+      );
+      setSku("SHOE-URBAN-PRO" + Math.floor(10 + Math.random() * 89));
+      setName("Baskets Cuir Premium & Semelle Confort");
+      setDescription(
+        "Chaussures ville & sport en cuir véritable avec grille de pointures EU (39 à 45) et coloris."
+      );
+      if (shoeCat) setProdCategoryId(shoeCat.id);
+      setTrackingMode("VARIANT");
+      setCostPrice("42");
+      setSalePrice("119");
+      setReorderLevel("8");
+      setImageUrl(PRESET_PRODUCT_IMAGES[1].url);
+      setBrand("StrideLab Footwear");
+      setSupplierName("Atelier Cuir Porto");
+      setWeightKg("0.72");
+      setDimensionsCm("33 x 22 x 12 cm");
+      setLeadTimeDays("6");
+      setSpecsList([
+        { key: "Matière extérieure", value: "Cuir pleine fleur & suède" },
+        { key: "Semelle", value: "Caoutchouc cousu Strobel" },
+        { key: "Grille Pointures", value: "EU 40, 41, 42, 43, 44" },
+      ]);
+      setVariantsList([
+        { sku: "SHOE-P40-NOIR", attr1Key: "Pointure", attr1Val: "40", attr2Key: "Couleur", attr2Val: "Noir Onyx" },
+        { sku: "SHOE-P41-NOIR", attr1Key: "Pointure", attr1Val: "41", attr2Key: "Couleur", attr2Val: "Noir Onyx" },
+        { sku: "SHOE-P42-NOIR", attr1Key: "Pointure", attr1Val: "42", attr2Key: "Couleur", attr2Val: "Noir Onyx" },
+        { sku: "SHOE-P43-BLANC", attr1Key: "Pointure", attr1Val: "43", attr2Key: "Couleur", attr2Val: "Blanc Craie" },
+        { sku: "SHOE-P44-BLANC", attr1Key: "Pointure", attr1Val: "44", attr2Key: "Couleur", attr2Val: "Blanc Craie" },
+      ]);
+    } else if (sector === "HABIT") {
+      const habitCat = categories.find((c: any) =>
+        String(c.code || "").includes("HABIT")
+      );
+      setSku("HABIT-CHEMISE-LIN" + Math.floor(10 + Math.random() * 89));
+      setName("Chemise Coupe Droite Lin & Coton Bio");
+      setDescription(
+        "Article prêt-à-porter décliné par taille (S, M, L, XL) et couleur saisonnière."
+      );
+      if (habitCat) setProdCategoryId(habitCat.id);
+      setTrackingMode("VARIANT");
+      setCostPrice("24");
+      setSalePrice("69");
+      setReorderLevel("10");
+      setImageUrl(PRESET_PRODUCT_IMAGES[2].url);
+      setBrand("Maison Nordique Studio");
+      setSupplierName("Confection Textile Euro");
+      setWeightKg("0.32");
+      setDimensionsCm("36 x 28 x 3 cm");
+      setLeadTimeDays("5");
+      setSpecsList([
+        { key: "Composition", value: "60% Lin Français, 40% Coton Bio" },
+        { key: "Coupe", value: "Regular Fit Unisexe" },
+        { key: "Entretien", value: "Lavage délicat 30°C" },
+      ]);
+      setVariantsList([
+        { sku: "HAB-S-BLEU", attr1Key: "Taille", attr1Val: "S", attr2Key: "Couleur", attr2Val: "Bleu Ciel" },
+        { sku: "HAB-M-BLEU", attr1Key: "Taille", attr1Val: "M", attr2Key: "Couleur", attr2Val: "Bleu Ciel" },
+        { sku: "HAB-L-SABLE", attr1Key: "Taille", attr1Val: "L", attr2Key: "Couleur", attr2Val: "Beige Sable" },
+        { sku: "HAB-XL-SABLE", attr1Key: "Taille", attr1Val: "XL", attr2Key: "Couleur", attr2Val: "Beige Sable" },
+      ]);
+    } else {
+      setSku("REF-STD-" + Math.floor(100 + Math.random() * 899));
+      setName("");
+      setDescription("");
+      setTrackingMode("STANDARD");
+      setCostPrice("45");
+      setSalePrice("79");
+      setReorderLevel("5");
+      setImageUrl(PRESET_PRODUCT_IMAGES[3].url);
+      setBrand("G-Stock ProLine");
+      setSupplierName("Distribution Centrale Europe");
+      setWeightKg("1.20");
+      setDimensionsCm("30 x 20 x 15 cm");
+      setLeadTimeDays("3");
+      setSpecsList([
+        { key: "Norme", value: "CE / ISO 9001" },
+        { key: "Conditionnement", value: "Boîte individuelle" },
+      ]);
+      setVariantsList([]);
+    }
+  }
+
   function openCreateProductModal() {
     setEditingProduct(null);
     setSku("");
@@ -261,6 +395,7 @@ export default function ProductsPage() {
       { key: "Norme", value: "CE / ISO 9001" },
       { key: "Conditionnement", value: "Boîte individuelle" },
     ]);
+    setVariantsList([]);
     setIsActive(true);
     setFeedback(null);
     setProductModalOpen(true);
@@ -284,11 +419,22 @@ export default function ProductsPage() {
     setWeightKg(product.weightKg !== null && product.weightKg !== undefined ? String(product.weightKg) : "");
     setDimensionsCm(product.dimensionsCm || "");
     setLeadTimeDays(String(product.leadTimeDays ?? 3));
-    const entries = Object.entries(product.specsJson || {}).map(([k, v]) => ({
+    const entries = Object.entries(product.specsJson || product.specifications || {}).map(([k, v]) => ({
       key: k,
       value: String(v),
     }));
     setSpecsList(entries.length > 0 ? entries : [{ key: "Origine", value: "Union Européenne" }]);
+    const existingVars = (product.variants || []).map((v: any) => {
+      const attrEntries = Object.entries(v.attributes || {});
+      return {
+        sku: v.sku || "",
+        attr1Key: attrEntries[0]?.[0] || "Taille/Pointure",
+        attr1Val: String(attrEntries[0]?.[1] || ""),
+        attr2Key: attrEntries[1]?.[0] || "Couleur/VIN",
+        attr2Val: String(attrEntries[1]?.[1] || ""),
+      };
+    });
+    setVariantsList(existingVars);
     setIsActive(product.isActive !== false);
     setFeedback(null);
     setProductModalOpen(true);
@@ -324,6 +470,22 @@ export default function ProductsPage() {
       }
     }
 
+    const formattedVariants = variantsList
+      .filter((v) => v.sku.trim() && (v.attr1Val.trim() || v.attr2Val.trim()))
+      .map((v) => {
+        const attributes: Record<string, string> = {};
+        if (v.attr1Key.trim() && v.attr1Val.trim()) {
+          attributes[v.attr1Key.trim()] = v.attr1Val.trim();
+        }
+        if (v.attr2Key.trim() && v.attr2Val.trim()) {
+          attributes[v.attr2Key.trim()] = v.attr2Val.trim();
+        }
+        return {
+          sku: v.sku.trim().toUpperCase(),
+          attributes,
+        };
+      });
+
     try {
       const payload = {
         sku: sku.trim().toUpperCase(),
@@ -343,6 +505,7 @@ export default function ProductsPage() {
         dimensionsCm: dimensionsCm.trim() || null,
         leadTimeDays: Number(leadTimeDays) || 3,
         specsJson,
+        variants: formattedVariants,
         isActive,
       };
 
@@ -353,7 +516,7 @@ export default function ProductsPage() {
         }
         setFeedback({
           type: "success",
-          message: `La référence « ${payload.name} » (${payload.sku}) a été mise à jour avec ses détails et visuels.`,
+          message: `La référence « ${payload.name} » (${payload.sku}) a été mise à jour avec ses détails, variantes et visuels.`,
         });
       } else {
         await createProduct(payload).unwrap();
@@ -995,6 +1158,32 @@ export default function ProductsPage() {
                                 <strong>{k}:</strong> {String(v)}
                               </span>
                             ))}
+                          </div>
+                        )}
+
+                        {/* Grille de Variantes (Pointures / Tailles / Couleurs / Châssis VIN) */}
+                        {(p.variants || []).length > 0 && (
+                          <div className="pt-1 border-t border-border/50 space-y-1">
+                            <div className="text-[10px] font-bold text-primary flex items-center justify-between">
+                              <span>
+                                Déclinaisons ({p.variants.length} variantes / VIN / tailles)
+                              </span>
+                            </div>
+                            <div className="flex flex-wrap gap-1">
+                              {p.variants.slice(0, 4).map((v: any) => (
+                                <span
+                                  key={v.sku}
+                                  className="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-semibold"
+                                >
+                                  {Object.values(v.attributes || {}).join(" • ") || v.sku}
+                                </span>
+                              ))}
+                              {p.variants.length > 4 && (
+                                <span className="px-1.5 py-0.5 rounded bg-surface-muted text-[10px] text-muted font-semibold">
+                                  +{p.variants.length - 4}
+                                </span>
+                              )}
+                            </div>
                           </div>
                         )}
                       </div>
@@ -1752,13 +1941,13 @@ export default function ProductsPage() {
                       <div className="p-3.5 border-b border-border bg-surface-muted/40 font-bold text-xs">
                         Fiche Technique &amp; Attributs Métier
                       </div>
-                      {Object.keys(detailProduct.specsJson || {}).length === 0 ? (
+                      {Object.keys(detailProduct.specsJson || detailProduct.specifications || {}).length === 0 ? (
                         <div className="p-6 text-center text-xs text-muted">
                           Aucune caractéristique technique enregistrée sur cette référence.
                         </div>
                       ) : (
                         <div className="divide-y divide-border text-xs">
-                          {Object.entries(detailProduct.specsJson || {}).map(([k, v]) => (
+                          {Object.entries(detailProduct.specsJson || detailProduct.specifications || {}).map(([k, v]) => (
                             <div
                               key={k}
                               className="px-4 py-2.5 flex items-center justify-between gap-4"
@@ -1770,6 +1959,42 @@ export default function ProductsPage() {
                         </div>
                       )}
                     </div>
+
+                    {/* Grille de Variantes (Pointures, Tailles, Couleurs, Châssis VIN) */}
+                    {(detailProduct.variants || []).length > 0 && (
+                      <div className="gstock-card overflow-hidden">
+                        <div className="p-3.5 border-b border-border bg-primary/10 font-bold text-xs text-primary flex items-center justify-between">
+                          <span>
+                            Grille de Variantes (Pointures / Tailles / Couleurs / Châssis VIN)
+                          </span>
+                          <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px]">
+                            {detailProduct.variants.length} déclinaisons
+                          </span>
+                        </div>
+                        <div className="divide-y divide-border text-xs">
+                          {detailProduct.variants.map((v: any) => (
+                            <div
+                              key={v.sku}
+                              className="px-4 py-2.5 flex items-center justify-between gap-4"
+                            >
+                              <span className="font-mono font-bold text-primary">
+                                {v.sku}
+                              </span>
+                              <div className="flex flex-wrap gap-1.5 justify-end">
+                                {Object.entries(v.attributes || {}).map(([ak, av]) => (
+                                  <span
+                                    key={ak}
+                                    className="px-2 py-0.5 rounded bg-surface-muted border border-border text-[11px]"
+                                  >
+                                    <strong>{ak}:</strong> {String(av)}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -1861,7 +2086,7 @@ export default function ProductsPage() {
         </div>
       )}
 
-      {/* MODAL CRÉATION / ÉDITION DE PRODUIT ENRICHIE (Image, Code-Barres, Marque, Prix Vente, Specs) */}
+      {/* MODAL CRÉATION / ÉDITION DE PRODUIT ENRICHIE (Image, Code-Barres, Marque, Prix Vente, Specs, Variantes) */}
       {productModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 overflow-y-auto">
           <div className="gstock-card p-6 max-w-2xl w-full space-y-4 my-8 max-h-[92vh] overflow-y-auto animate-fade-up">
@@ -1871,7 +2096,7 @@ export default function ProductsPage() {
                 <span>
                   {editingProduct
                     ? `Modifier ${editingProduct.sku}`
-                    : "Nouvelle référence produit enrichie"}
+                    : "Nouvelle référence produit (Magasin / Concession / Entrepôt)"}
                 </span>
               </h2>
               <button
@@ -1882,6 +2107,46 @@ export default function ProductsPage() {
                 <X size={18} />
               </button>
             </div>
+
+            {/* Modèles Métiers Magasin en 1 clic */}
+            {!editingProduct && (
+              <div className="p-3 rounded-control border border-primary/30 bg-primary/5 space-y-2">
+                <div className="text-[11px] font-bold text-primary flex items-center gap-1.5">
+                  <Sparkles size={13} />
+                  <span>Pré-remplir avec un modèle métier de magasin (1 clic) :</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => applySectorPreset("AUTO")}
+                    className="px-3 py-1.5 rounded-control bg-surface border border-border hover:border-primary text-xs font-semibold transition-colors"
+                  >
+                    🚗 Concession Voiture (VIN &amp; Finition)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => applySectorPreset("SHOES")}
+                    className="px-3 py-1.5 rounded-control bg-surface border border-border hover:border-primary text-xs font-semibold transition-colors"
+                  >
+                    👟 Chaussures (Grille Pointures 40-44)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => applySectorPreset("HABIT")}
+                    className="px-3 py-1.5 rounded-control bg-surface border border-border hover:border-primary text-xs font-semibold transition-colors"
+                  >
+                    👕 Habit / Prêt-à-porter (Tailles S-XL &amp; Couleurs)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => applySectorPreset("STANDARD")}
+                    className="px-3 py-1.5 rounded-control bg-surface border border-border hover:border-primary text-xs font-semibold transition-colors"
+                  >
+                    📦 Article Standard
+                  </button>
+                </div>
+              </div>
+            )}
 
             <form onSubmit={handleSaveProduct} className="space-y-4">
               {/* Visuel Produit (Galerie rapide + Upload fichier + URL) */}
@@ -1980,9 +2245,9 @@ export default function ProductsPage() {
                     className="w-full px-3 py-2 text-xs rounded-control border border-border bg-background"
                   >
                     <option value="STANDARD">Standard (Quantité)</option>
-                    <option value="SERIAL">Numéro de Série (SERIAL)</option>
+                    <option value="SERIAL">Numéro de Série / VIN (SERIAL)</option>
                     <option value="LOT_EXPIRY">Lot &amp; Péremption (FEFO)</option>
-                    <option value="VARIANT">Variantes (Taille/Couleur)</option>
+                    <option value="VARIANT">Variantes (Pointure/Taille/Couleur)</option>
                   </select>
                 </div>
               </div>
@@ -1997,7 +2262,7 @@ export default function ProductsPage() {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Ex: Douchette Code-Barres Laser 2D"
+                    placeholder="Ex: SUV Hybride 140ch / Sneakers AirFlow / Veste Denim"
                     className="w-full px-3 py-2 text-xs rounded-control border border-border bg-background"
                   />
                 </div>
@@ -2160,6 +2425,113 @@ export default function ProductsPage() {
                     className="w-full px-3 py-2 text-xs font-mono rounded-control border border-border bg-background"
                   />
                 </div>
+              </div>
+
+              {/* Grille de Variantes (Pointures / Tailles / Couleurs / Châssis VIN) */}
+              <div className="p-3.5 rounded-control border border-primary/30 bg-primary/5 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold flex items-center gap-1.5 text-primary">
+                    <Layers size={13} />
+                    <span>
+                      Grille de Variantes (Pointures, Tailles, Couleurs ou N° Châssis VIN)
+                    </span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setVariantsList([
+                        ...variantsList,
+                        {
+                          sku: `${sku || "VAR"}-${variantsList.length + 1}`,
+                          attr1Key: "Taille/Pointure",
+                          attr1Val: "",
+                          attr2Key: "Couleur/VIN",
+                          attr2Val: "",
+                        },
+                      ])
+                    }
+                    className="text-xs text-primary font-semibold hover:underline inline-flex items-center gap-1"
+                  >
+                    <Plus size={12} /> Ajouter une variante / taille / VIN
+                  </button>
+                </div>
+
+                {variantsList.length === 0 ? (
+                  <p className="text-[11px] text-muted">
+                    Aucune variante définie. Cliquez sur « Ajouter une variante » ou choisissez un modèle métier ci-dessus (Chaussures, Habit, Voiture).
+                  </p>
+                ) : (
+                  <div className="space-y-2">
+                    {variantsList.map((v, idx) => (
+                      <div key={idx} className="grid grid-cols-12 gap-1.5 items-center">
+                        <input
+                          type="text"
+                          value={v.sku}
+                          onChange={(e) => {
+                            const next = [...variantsList];
+                            next[idx].sku = e.target.value;
+                            setVariantsList(next);
+                          }}
+                          placeholder="SKU Variante"
+                          className="col-span-3 px-2 py-1 text-[11px] font-mono rounded border border-border bg-background"
+                        />
+                        <input
+                          type="text"
+                          value={v.attr1Key}
+                          onChange={(e) => {
+                            const next = [...variantsList];
+                            next[idx].attr1Key = e.target.value;
+                            setVariantsList(next);
+                          }}
+                          placeholder="Ex: Pointure"
+                          className="col-span-2 px-2 py-1 text-[11px] rounded border border-border bg-background"
+                        />
+                        <input
+                          type="text"
+                          value={v.attr1Val}
+                          onChange={(e) => {
+                            const next = [...variantsList];
+                            next[idx].attr1Val = e.target.value;
+                            setVariantsList(next);
+                          }}
+                          placeholder="Ex: 42 / L"
+                          className="col-span-2 px-2 py-1 text-[11px] font-bold rounded border border-border bg-background"
+                        />
+                        <input
+                          type="text"
+                          value={v.attr2Key}
+                          onChange={(e) => {
+                            const next = [...variantsList];
+                            next[idx].attr2Key = e.target.value;
+                            setVariantsList(next);
+                          }}
+                          placeholder="Ex: Couleur/VIN"
+                          className="col-span-2 px-2 py-1 text-[11px] rounded border border-border bg-background"
+                        />
+                        <input
+                          type="text"
+                          value={v.attr2Val}
+                          onChange={(e) => {
+                            const next = [...variantsList];
+                            next[idx].attr2Val = e.target.value;
+                            setVariantsList(next);
+                          }}
+                          placeholder="Ex: Noir / VF1..."
+                          className="col-span-2 px-2 py-1 text-[11px] font-bold rounded border border-border bg-background"
+                        />
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setVariantsList(variantsList.filter((_, i) => i !== idx))
+                          }
+                          className="col-span-1 flex justify-center text-muted hover:text-danger"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Caractéristiques techniques dynamiques (specsJson) */}

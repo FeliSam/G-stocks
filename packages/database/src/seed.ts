@@ -443,6 +443,156 @@ export async function seedDatabase() {
     },
   });
 
+  const catAuto = await prisma.category.upsert({
+    where: { organizationId_code: { organizationId: demoOrg.id, code: "CAT-AUTO" } },
+    update: {},
+    create: {
+      organizationId: demoOrg.id,
+      code: "CAT-AUTO",
+      name: "Automobile & Concession Véhicules",
+    },
+  });
+
+  const catShoes = await prisma.category.upsert({
+    where: { organizationId_code: { organizationId: demoOrg.id, code: "CAT-SHOES" } },
+    update: {},
+    create: {
+      organizationId: demoOrg.id,
+      code: "CAT-SHOES",
+      name: "Chaussures & Sneakers (Pointures)",
+    },
+  });
+
+  const catHabit = await prisma.category.upsert({
+    where: { organizationId_code: { organizationId: demoOrg.id, code: "CAT-HABIT" } },
+    update: {},
+    create: {
+      organizationId: demoOrg.id,
+      code: "CAT-HABIT",
+      name: "Habits & Prêt-à-porter (Tailles & Couleurs)",
+    },
+  });
+
+  const prodAuto = await prisma.product.upsert({
+    where: { organizationId_sku: { organizationId: demoOrg.id, sku: "AUTO-SUV-HYB26" } },
+    update: {},
+    create: {
+      organizationId: demoOrg.id,
+      categoryId: catAuto.id,
+      sku: "AUTO-SUV-HYB26",
+      name: "SUV Hybride Urbain 1.6L 140ch (Millésime 2026)",
+      description:
+        "Véhicule neuf disponible en concession avec suivi par numéro de châssis (VIN), garantie constructeur 36 mois.",
+      baseUnitId: unId,
+      costPrice: new Prisma.Decimal("21800.00"),
+      salePrice: new Prisma.Decimal("26900.00"),
+      reorderLevel: new Prisma.Decimal("2"),
+      trackingMode: "SERIAL",
+      barcode: "3760123450049",
+      brand: "Apex Motors Europe",
+      supplierName: "Usine Centrale Assemblage",
+      weightKg: new Prisma.Decimal("1420.000"),
+      dimensionsCm: "438 x 181 x 162 cm",
+      leadTimeDays: 14,
+      imageUrl:
+        "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80",
+      specsJson: {
+        Motorisation: "Hybride 1.6L 140 ch BVA6",
+        Finition: "GT-Line Pack Cuir & Toit Panoramique",
+        VIN_Lot: "VF1-HYB2026-SÉRIE-A",
+        Garantie: "36 mois ou 100 000 km",
+      },
+    },
+  });
+
+  const prodShoe = await prisma.product.upsert({
+    where: { organizationId_sku: { organizationId: demoOrg.id, sku: "SHOE-RUN-AIR" } },
+    update: {},
+    create: {
+      organizationId: demoOrg.id,
+      categoryId: catShoes.id,
+      sku: "SHOE-RUN-AIR",
+      name: "Sneakers Running Cuir & Mesh AirFlow Pro",
+      description:
+        "Chaussures de sport et ville à semelle amortissante haute densité. Déclinées du 39 au 45.",
+      baseUnitId: unId,
+      costPrice: new Prisma.Decimal("38.00"),
+      salePrice: new Prisma.Decimal("99.00"),
+      reorderLevel: new Prisma.Decimal("12"),
+      trackingMode: "VARIANT",
+      barcode: "3760123450056",
+      brand: "StrideLab Footwear",
+      supplierName: "Atelier Cuir & Sport Porto",
+      weightKg: new Prisma.Decimal("0.680"),
+      dimensionsCm: "34 x 22 x 13 cm",
+      leadTimeDays: 6,
+      imageUrl:
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80",
+      specsJson: {
+        PointuresDisponibles: "40, 41, 42, 43, 44",
+        Coloris: "Rouge Carmin / Blanc / Noir Onyx",
+        Matiere: "Mesh respirant & empiècements cuir",
+        Semelle: "EVA rebond dynamique",
+      },
+    },
+  });
+
+  const prodHabit = await prisma.product.upsert({
+    where: { organizationId_sku: { organizationId: demoOrg.id, sku: "HABIT-VESTE-BIO" } },
+    update: {},
+    create: {
+      organizationId: demoOrg.id,
+      categoryId: catHabit.id,
+      sku: "HABIT-VESTE-BIO",
+      name: "Veste Workwear Coton Bio & Denim Brut",
+      description:
+        "Veste coupe droite unisexe 100% coton biologique certifié GOTS, coutures renforcées. Tailles S à XL.",
+      baseUnitId: unId,
+      costPrice: new Prisma.Decimal("29.00"),
+      salePrice: new Prisma.Decimal("79.00"),
+      reorderLevel: new Prisma.Decimal("10"),
+      trackingMode: "VARIANT",
+      barcode: "3760123450063",
+      brand: "Maison Nordique Studio",
+      supplierName: "Textile Bio Méditerranée",
+      weightKg: new Prisma.Decimal("0.540"),
+      dimensionsCm: "40 x 30 x 4 cm",
+      leadTimeDays: 5,
+      imageUrl:
+        "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=80",
+      specsJson: {
+        TaillesDisponibles: "S, M, L, XL",
+        Couleurs: "Indigo Brut, Vert Olive, Sable",
+        Grammage: "340 g/m² Denim lourd",
+        Entretien: "Lavage 30°C",
+      },
+    },
+  });
+
+  // Soldes pour les articles magasin (Voiture, Chaussures, Habits)
+  for (const [pId, qty] of [
+    [prodAuto.id, "4"],
+    [prodShoe.id, "46"],
+    [prodHabit.id, "38"],
+  ] as const) {
+    await prisma.inventoryBalance.upsert({
+      where: {
+        organizationId_productId_locationId: {
+          organizationId: demoOrg.id,
+          productId: pId,
+          locationId: locA1.id,
+        },
+      },
+      update: { onHand: new Prisma.Decimal(qty) },
+      create: {
+        organizationId: demoOrg.id,
+        productId: pId,
+        locationId: locA1.id,
+        onHand: new Prisma.Decimal(qty),
+      },
+    });
+  }
+
   // Mouvement initial idempotent de démonstration
   const existingMovement = await prisma.stockMovement.findUnique({
     where: {

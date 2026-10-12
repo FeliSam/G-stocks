@@ -9,7 +9,7 @@ import {
 } from "@g-stock/config";
 import type { DesignTokens, ThemePresetId } from "@g-stock/types";
 
-const STORAGE_KEY = "gstock_browser_db_v2";
+const STORAGE_KEY = "gstock_browser_db_v3";
 
 function getInitialDb() {
   const orgId = "11111111-1111-4111-8111-111111111111";
@@ -19,6 +19,9 @@ function getInitialDb() {
   const locRecId = "33333333-3333-4333-8333-333333333333";
   const catEquipId = "44444444-4444-4444-8444-444444444441";
   const catPackId = "44444444-4444-4444-8444-444444444442";
+  const catAutoId = "44444444-4444-4444-8444-444444444443";
+  const catShoesId = "44444444-4444-4444-8444-444444444444";
+  const catHabitId = "44444444-4444-4444-8444-444444444445";
   const unitUnId = "55555555-5555-4555-8555-555555555551";
   const unitBoxId = "55555555-5555-4555-8555-555555555552";
   const unitKgId = "55555555-5555-4555-8555-555555555553";
@@ -28,22 +31,134 @@ function getInitialDb() {
   const prod3Id = "66666666-6666-4666-8666-666666666663";
   const prod4Id = "66666666-6666-4666-8666-666666666664";
   const prod5Id = "66666666-6666-4666-8666-666666666665";
+  const prodAutoId = "66666666-6666-4666-8666-666666666666";
+  const prodShoesId = "66666666-6666-4666-8666-666666666667";
+  const prodHabitId = "66666666-6666-4666-8666-666666666668";
   const adminUserId = "77777777-7777-4777-8777-777777777771";
   const managerUserId = "77777777-7777-4777-8777-777777777772";
 
   const units = [
-    { id: unitUnId, organizationId: null, code: "UN", name: "Unité / Pièce", dimension: "COUNT", precision: 0 },
+    { id: unitUnId, organizationId: null, code: "UN", name: "Unité / Pièce / Paire", dimension: "COUNT", precision: 0 },
     { id: unitBoxId, organizationId: null, code: "BOX", name: "Boîte / Carton", dimension: "COUNT", precision: 0 },
     { id: unitKgId, organizationId: null, code: "KG", name: "Kilogramme", dimension: "MASS", precision: 3 },
     { id: unitLId, organizationId: null, code: "L", name: "Litre", dimension: "VOLUME", precision: 3 },
   ];
 
   const categories = [
-    { id: catEquipId, organizationId: orgId, code: "CAT-EQUIP", name: "Équipements & Outillage Pro", isActive: true },
-    { id: catPackId, organizationId: orgId, code: "CAT-EMBAL", name: "Emballages & Conditionnement", isActive: true },
+    { id: catAutoId, organizationId: orgId, code: "CAT-AUTO", name: "Automobile & Véhicules", isActive: true },
+    { id: catShoesId, organizationId: orgId, code: "CAT-SHOES", name: "Chaussures & Sneakers", isActive: true },
+    { id: catHabitId, organizationId: orgId, code: "CAT-HABIT", name: "Habits & Prêt-à-Porter", isActive: true },
+    { id: catEquipId, organizationId: orgId, code: "CAT-EQUIP", name: "Équipements & High-Tech", isActive: true },
+    { id: catPackId, organizationId: orgId, code: "CAT-EMBAL", name: "Emballages & Logistique", isActive: true },
   ];
 
   const products = [
+    {
+      id: prodAutoId,
+      organizationId: orgId,
+      categoryId: catAutoId,
+      sku: "AUTO-SUV-HYB26",
+      name: "SUV Hybride Urbain 1.6L 140ch (Millésime 2026)",
+      description: "Véhicule neuf garantie constructeur 5 ans, boîte automatique e-CVT, caméra 360° et pack sécurité.",
+      baseUnitId: unitUnId,
+      costPrice: 21500.0,
+      salePrice: 26900.0,
+      reorderLevel: 1,
+      trackingMode: "SERIAL",
+      barcode: "3760123450063",
+      brand: " NovaMotors Europe",
+      supplierName: "Centrale Concession Automobile SAS",
+      weightKg: 1420.0,
+      dimensionsCm: "438 x 181 x 162 cm",
+      leadTimeDays: 14,
+      imageUrl: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80",
+      specsJson: {
+        Motorisation: "Hybride Essence/Électrique 140 ch",
+        Transmission: "Automatique 6 rapports",
+        VIN_Chassis: "VF1-HYB2026-00841 / 00842 / 00843",
+        Kilometrage: "10 km (Véhicule Neuf 0 km)",
+        ColorisDispo: "Blanc Nacré, Noir Obsidienne, Gris Titane",
+        Garantie: "5 ans ou 100 000 km",
+      },
+      variants: [
+        { id: "var-auto-1", sku: "VIN-VF1-00841", attributes: { Couleur: "Blanc Nacré", VIN: "VF1HYB202600841", Etat: "Neuf" } },
+        { id: "var-auto-2", sku: "VIN-VF1-00842", attributes: { Couleur: "Noir Obsidienne", VIN: "VF1HYB202600842", Etat: "Neuf" } },
+        { id: "var-auto-3", sku: "VIN-VF1-00843", attributes: { Couleur: "Gris Titane", VIN: "VF1HYB202600843", Etat: "Showroom" } },
+      ],
+      isActive: true,
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: prodShoesId,
+      organizationId: orgId,
+      categoryId: catShoesId,
+      sku: "SHOE-RUN-AIR",
+      name: "Sneakers Running Cuir & Mesh AirFlow Pro",
+      description: "Chaussures de sport et ville à semelle amortissante haute densité, déclinées du 39 au 45.",
+      baseUnitId: unitUnId,
+      costPrice: 48.0,
+      salePrice: 119.0,
+      reorderLevel: 10,
+      trackingMode: "VARIANT",
+      barcode: "3760123450070",
+      brand: "Kinetix Footwear",
+      supplierName: "EuroShoes Distribution Milan",
+      weightKg: 0.68,
+      dimensionsCm: "Boîte 33 x 22 x 12 cm",
+      leadTimeDays: 4,
+      imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80",
+      specsJson: {
+        Pointures: "39, 40, 41, 42, 43, 44, 45",
+        Coloris: "Rouge Carmin / Blanc / Noir",
+        Dessus: "Cuir pleine fleur & Mesh respirant",
+        Semelle: "Caoutchouc EVA anti-dérapant",
+        Rayon: "Chaussures Homme / Mixte",
+      },
+      variants: [
+        { id: "var-shoe-40", sku: "SHOE-RUN-AIR-40", attributes: { Pointure: "40", Couleur: "Rouge / Blanc" } },
+        { id: "var-shoe-41", sku: "SHOE-RUN-AIR-41", attributes: { Pointure: "41", Couleur: "Rouge / Blanc" } },
+        { id: "var-shoe-42", sku: "SHOE-RUN-AIR-42", attributes: { Pointure: "42", Couleur: "Rouge / Blanc" } },
+        { id: "var-shoe-43", sku: "SHOE-RUN-AIR-43", attributes: { Pointure: "43", Couleur: "Noir / Blanc" } },
+        { id: "var-shoe-44", sku: "SHOE-RUN-AIR-44", attributes: { Pointure: "44", Couleur: "Noir / Blanc" } },
+      ],
+      isActive: true,
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: prodHabitId,
+      organizationId: orgId,
+      categoryId: catHabitId,
+      sku: "HABIT-VESTE-BIO",
+      name: "Veste Workwear Coton Bio & Denim Brut",
+      description: "Veste coupe droite unisexe en coton biologique certifié GOTS 380g/m², tailles S à XXL.",
+      baseUnitId: unitUnId,
+      costPrice: 35.0,
+      salePrice: 89.0,
+      reorderLevel: 12,
+      trackingMode: "VARIANT",
+      barcode: "3760123450087",
+      brand: "Atelier Nord Paris",
+      supplierName: "Textile & Confection Lyon",
+      weightKg: 0.75,
+      dimensionsCm: "Plié 40 x 30 x 4 cm",
+      leadTimeDays: 5,
+      imageUrl: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80",
+      specsJson: {
+        Tailles: "S, M, L, XL, XXL",
+        Coloris: "Indigo Brut, Camel, Vert Olive",
+        Composition: "100% Coton Biologique GOTS (380 g/m²)",
+        Collection: "Automne-Hiver 2026",
+        Entretien: "Lavage 30°C",
+      },
+      variants: [
+        { id: "var-hab-s", sku: "HABIT-VESTE-S", attributes: { Taille: "S", Couleur: "Indigo Brut" } },
+        { id: "var-hab-m", sku: "HABIT-VESTE-M", attributes: { Taille: "M", Couleur: "Indigo Brut" } },
+        { id: "var-hab-l", sku: "HABIT-VESTE-L", attributes: { Taille: "L", Couleur: "Camel" } },
+        { id: "var-hab-xl", sku: "HABIT-VESTE-XL", attributes: { Taille: "XL", Couleur: "Vert Olive" } },
+      ],
+      isActive: true,
+      createdAt: new Date().toISOString(),
+    },
     {
       id: prod1Id,
       organizationId: orgId,
@@ -187,8 +302,8 @@ function getInitialDb() {
   ];
 
   const locations = [
-    { id: locA1Id, organizationId: orgId, warehouseId: whId, code: "ALLEE-A-01", locationType: "STORAGE", isActive: true },
-    { id: locB1Id, organizationId: orgId, warehouseId: whId, code: "ALLEE-B-01", locationType: "STORAGE", isActive: true },
+    { id: locA1Id, organizationId: orgId, warehouseId: whId, code: "MAGASIN-RAYON-A", locationType: "STORAGE", isActive: true },
+    { id: locB1Id, organizationId: orgId, warehouseId: whId, code: "RESERVE-B-01", locationType: "STORAGE", isActive: true },
     { id: locRecId, organizationId: orgId, warehouseId: whId, code: "QUAI-RECEP", locationType: "RECEIVING", isActive: true },
   ];
 
@@ -197,12 +312,15 @@ function getInitialDb() {
       id: whId,
       organizationId: orgId,
       code: "WH-LYON-01",
-      name: "Entrepôt Central Lyon-Corbas (DÉMO)",
+      name: "Magasin Principal & Showroom Lyon (DÉMO)",
       isActive: true,
     },
   ];
 
   const balances = [
+    { id: "bal-auto", organizationId: orgId, productId: prodAutoId, locationId: locA1Id, onHand: 3, reserved: 0 },
+    { id: "bal-shoes", organizationId: orgId, productId: prodShoesId, locationId: locA1Id, onHand: 28, reserved: 0 },
+    { id: "bal-habit", organizationId: orgId, productId: prodHabitId, locationId: locA1Id, onHand: 42, reserved: 0 },
     { id: "bal-1", organizationId: orgId, productId: prod1Id, locationId: locA1Id, onHand: 34, reserved: 0 },
     { id: "bal-2", organizationId: orgId, productId: prod2Id, locationId: locA1Id, onHand: 8, reserved: 0 },
     { id: "bal-3", organizationId: orgId, productId: prod3Id, locationId: locB1Id, onHand: 0, reserved: 0 },

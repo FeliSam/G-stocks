@@ -31,6 +31,7 @@ import {
   Command,
   ArrowRight,
   Barcode,
+  ShoppingBag,
 } from "lucide-react";
 import {
   useGetMeQuery,
@@ -223,6 +224,14 @@ export function AppShell({
       show: true,
       badge: "Live",
       badgeTone: "emerald",
+    },
+    {
+      href: "/pos",
+      label: "Caisse & Vente (POS)",
+      icon: ShoppingBag,
+      show: permissions.has("stock.issue") || permissions.has("products.read"),
+      badge: "Magasin",
+      badgeTone: "primary",
     },
     {
       href: "/products",
