@@ -76,8 +76,17 @@ export async function createProductService(
         categoryId: input.categoryId ?? null,
         baseUnitId: input.baseUnitId,
         costPrice: new Prisma.Decimal(input.costPrice),
+        salePrice: new Prisma.Decimal(input.salePrice ?? 0),
         reorderLevel: new Prisma.Decimal(input.reorderLevel),
         trackingMode: input.trackingMode,
+        imageUrl: input.imageUrl ?? null,
+        barcode: input.barcode ?? null,
+        brand: input.brand ?? null,
+        supplierName: input.supplierName ?? null,
+        weightKg: input.weightKg !== undefined && input.weightKg !== null ? new Prisma.Decimal(input.weightKg) : null,
+        dimensionsCm: input.dimensionsCm ?? null,
+        leadTimeDays: input.leadTimeDays ?? 3,
+        specsJson: input.specsJson ?? {},
         isActive: input.isActive,
         ...(input.variants && input.variants.length > 0
           ? {
@@ -144,10 +153,21 @@ export async function updateProductService(
         ...(input.categoryId !== undefined ? { categoryId: input.categoryId } : {}),
         ...(input.baseUnitId !== undefined ? { baseUnitId: input.baseUnitId } : {}),
         ...(input.costPrice !== undefined ? { costPrice: new Prisma.Decimal(input.costPrice) } : {}),
+        ...(input.salePrice !== undefined ? { salePrice: new Prisma.Decimal(input.salePrice) } : {}),
         ...(input.reorderLevel !== undefined
           ? { reorderLevel: new Prisma.Decimal(input.reorderLevel) }
           : {}),
         ...(input.trackingMode !== undefined ? { trackingMode: input.trackingMode } : {}),
+        ...(input.imageUrl !== undefined ? { imageUrl: input.imageUrl } : {}),
+        ...(input.barcode !== undefined ? { barcode: input.barcode } : {}),
+        ...(input.brand !== undefined ? { brand: input.brand } : {}),
+        ...(input.supplierName !== undefined ? { supplierName: input.supplierName } : {}),
+        ...(input.weightKg !== undefined
+          ? { weightKg: input.weightKg !== null ? new Prisma.Decimal(input.weightKg) : null }
+          : {}),
+        ...(input.dimensionsCm !== undefined ? { dimensionsCm: input.dimensionsCm } : {}),
+        ...(input.leadTimeDays !== undefined ? { leadTimeDays: input.leadTimeDays } : {}),
+        ...(input.specsJson !== undefined ? { specsJson: input.specsJson } : {}),
         ...(input.isActive !== undefined ? { isActive: input.isActive } : {}),
       },
       include: { category: true, baseUnit: true, variants: true },

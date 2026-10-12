@@ -15,6 +15,8 @@ export async function findProductsPaginated(
           OR: [
             { name: { contains: query.search, mode: "insensitive" } },
             { sku: { contains: query.search, mode: "insensitive" } },
+            { barcode: { contains: query.search, mode: "insensitive" } },
+            { brand: { contains: query.search, mode: "insensitive" } },
             { description: { contains: query.search, mode: "insensitive" } },
           ],
         }
@@ -55,6 +57,8 @@ export async function findProductsPaginated(
     return {
       ...p,
       costPrice: Number(p.costPrice),
+      salePrice: Number(p.salePrice ?? 0),
+      weightKg: p.weightKg !== null && p.weightKg !== undefined ? Number(p.weightKg) : null,
       reorderLevel,
       totalOnHand,
       totalReserved,

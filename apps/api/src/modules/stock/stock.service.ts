@@ -68,6 +68,14 @@ async function applyBalanceDeltaInTx(
     negativeStockPolicy: "FORBID" | "WARN" | "ALLOW";
   }
 ) {
+  await tx.$queryRaw`
+    SELECT id FROM inventory_balances
+    WHERE organization_id = ${params.organizationId}::uuid
+      AND product_id = ${params.productId}::uuid
+      AND location_id = ${params.locationId}::uuid
+    FOR UPDATE
+  `;
+
   const existing = await tx.inventoryBalance.findUnique({
     where: {
       organizationId_productId_locationId: {

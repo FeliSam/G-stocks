@@ -9,7 +9,7 @@ import {
 } from "@g-stock/config";
 import type { DesignTokens, ThemePresetId } from "@g-stock/types";
 
-const STORAGE_KEY = "gstock_browser_db_v1";
+const STORAGE_KEY = "gstock_browser_db_v2";
 
 function getInitialDb() {
   const orgId = "11111111-1111-4111-8111-111111111111";
@@ -26,6 +26,8 @@ function getInitialDb() {
   const prod1Id = "66666666-6666-4666-8666-666666666661";
   const prod2Id = "66666666-6666-4666-8666-666666666662";
   const prod3Id = "66666666-6666-4666-8666-666666666663";
+  const prod4Id = "66666666-6666-4666-8666-666666666664";
+  const prod5Id = "66666666-6666-4666-8666-666666666665";
   const adminUserId = "77777777-7777-4777-8777-777777777771";
   const managerUserId = "77777777-7777-4777-8777-777777777772";
 
@@ -48,11 +50,25 @@ function getInitialDb() {
       categoryId: catEquipId,
       sku: "SCAN-PRO-2D",
       name: "Douchette Code-Barres Laser 2D Sans Fil",
-      description: "Lecteur industriel haute cadence IP65 avec socle de charge.",
+      description: "Lecteur industriel haute cadence IP65 avec socle de charge et retour haptique.",
       baseUnitId: unitUnId,
       costPrice: 85.0,
+      salePrice: 149.0,
       reorderLevel: 10,
-      trackingMode: "STANDARD",
+      trackingMode: "SERIAL",
+      barcode: "3760123450018",
+      brand: "ZebraTech Industrial",
+      supplierName: "AutoID Distribution Europe",
+      weightKg: 0.42,
+      dimensionsCm: "18 x 7 x 11 cm",
+      leadTimeDays: 3,
+      imageUrl: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80",
+      specsJson: {
+        Connectivite: "Bluetooth 5.2 + Base USB-C",
+        IndiceProtection: "IP65 (chutes 2m sur béton)",
+        Autonomie: "65 000 lectures / charge",
+        Garantie: "3 ans constructeur",
+      },
       isActive: true,
       createdAt: new Date().toISOString(),
     },
@@ -62,11 +78,25 @@ function getInitialDb() {
       categoryId: catPackId,
       sku: "CAISSE-60X40",
       name: "Bac Logistique Norme Europe 600x400mm",
-      description: "Bac polypropylène haute densité gerbable gris.",
+      description: "Bac polypropylène haute densité gerbable gris à fond renforcé.",
       baseUnitId: unitUnId,
       costPrice: 14.5,
+      salePrice: 24.9,
       reorderLevel: 25,
       trackingMode: "STANDARD",
+      barcode: "3760123450025",
+      brand: "EuroPlast Pro",
+      supplierName: "Manutan Logistique SAS",
+      weightKg: 1.85,
+      dimensionsCm: "60 x 40 x 32 cm",
+      leadTimeDays: 5,
+      imageUrl: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=600&q=80",
+      specsJson: {
+        Matiere: "Polypropylène vierge alimentaire (PP-HD)",
+        VolumeUtile: "60 Litres",
+        ChargeMax: "35 kg unitaire / 250 kg gerbé",
+        Temperature: "-20°C à +80°C",
+      },
       isActive: true,
       createdAt: new Date().toISOString(),
     },
@@ -79,8 +109,78 @@ function getInitialDb() {
       description: "Film étirable transparent haute résistance pour palettisation.",
       baseUnitId: unitBoxId,
       costPrice: 42.0,
+      salePrice: 69.0,
       reorderLevel: 15,
+      trackingMode: "LOT_EXPIRY",
+      barcode: "3760123450032",
+      brand: "RajaPack",
+      supplierName: "Raja France Emballages",
+      weightKg: 13.2,
+      dimensionsCm: "45 x 30 x 50 cm",
+      leadTimeDays: 2,
+      imageUrl: "https://images.unsplash.com/photo-1607166452427-7e4477079cb9?auto=format&fit=crop&w=600&q=80",
+      specsJson: {
+        Epaisseur: "23 microns cast tri-couche",
+        Laize: "450 mm x 270 m par bobine",
+        Conditionnement: "Carton de 6 bobines",
+        Etirabilite: "Jusqu'à 180%",
+      },
+      isActive: true,
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: prod4Id,
+      organizationId: orgId,
+      categoryId: catEquipId,
+      sku: "IMPR-THERM-Z4",
+      name: "Imprimante Étiquettes Thermique 300 DPI",
+      description: "Imprimante industrielle transfert thermique directe pour étiquettes logistiques GS1-128.",
+      baseUnitId: unitUnId,
+      costPrice: 310.0,
+      salePrice: 489.0,
+      reorderLevel: 5,
+      trackingMode: "SERIAL",
+      barcode: "3760123450049",
+      brand: "ZebraTech Industrial",
+      supplierName: "AutoID Distribution Europe",
+      weightKg: 4.6,
+      dimensionsCm: "26 x 20 x 19 cm",
+      leadTimeDays: 4,
+      imageUrl: "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=600&q=80",
+      specsJson: {
+        Resolution: "300 DPI (12 points/mm)",
+        VitesseImpression: "200 mm / seconde",
+        LargeurMax: "108 mm (Étiquettes palettes A6)",
+        Interfaces: "Ethernet, USB, Wi-Fi 6",
+      },
+      isActive: true,
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: prod5Id,
+      organizationId: orgId,
+      categoryId: catEquipId,
+      sku: "BALANCE-PREC-30K",
+      name: "Balance Compteuse Industrielle Inox 30 kg",
+      description: "Balance de comptage haute précision IP67 avec double plateau et tarage automatique.",
+      baseUnitId: unitUnId,
+      costPrice: 165.0,
+      salePrice: 259.0,
+      reorderLevel: 6,
       trackingMode: "STANDARD",
+      barcode: "3760123450056",
+      brand: "KernPro Metrology",
+      supplierName: "Métrologie & Pesage SAS",
+      weightKg: 3.9,
+      dimensionsCm: "32 x 34 x 12 cm",
+      leadTimeDays: 5,
+      imageUrl: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
+      specsJson: {
+        PorteeMax: "30 kg / Précision 0,5 g",
+        Plateau: "Acier Inoxydable 304L (300x225 mm)",
+        Batterie: "Interne rechargeable 80h",
+        Fonction: "Comptage de pièces par échantillonnage",
+      },
       isActive: true,
       createdAt: new Date().toISOString(),
     },
@@ -106,6 +206,8 @@ function getInitialDb() {
     { id: "bal-1", organizationId: orgId, productId: prod1Id, locationId: locA1Id, onHand: 34, reserved: 0 },
     { id: "bal-2", organizationId: orgId, productId: prod2Id, locationId: locA1Id, onHand: 8, reserved: 0 },
     { id: "bal-3", organizationId: orgId, productId: prod3Id, locationId: locB1Id, onHand: 0, reserved: 0 },
+    { id: "bal-4", organizationId: orgId, productId: prod4Id, locationId: locA1Id, onHand: 12, reserved: 0 },
+    { id: "bal-5", organizationId: orgId, productId: prod5Id, locationId: locB1Id, onHand: 19, reserved: 0 },
   ];
 
   const movements = [
@@ -483,12 +585,27 @@ export async function handleLocalDemoRequest(
   }
 
   if (cleanUrl === "/products" && method === "GET") {
-    const orgProducts = db.products
+    const search = String(params?.search || "").trim().toLowerCase();
+    const catFilter = params?.categoryId || "";
+    const statusFilter = params?.stockStatus || "all";
+    const sortBy = params?.sortBy || "createdAt";
+    const sortOrder = params?.sortOrder || "desc";
+
+    let orgProducts = db.products
       .filter((p: any) => p.organizationId === org.id)
       .map((p: any) => {
         const category = db.categories.find((c: any) => c.id === p.categoryId) || null;
         const baseUnit = db.units.find((u: any) => u.id === p.baseUnitId) || db.units[0];
-        const pBals = db.balances.filter((b: any) => b.productId === p.id);
+        const pBals = db.balances
+          .filter((b: any) => b.productId === p.id)
+          .map((b: any) => {
+            const loc = db.locations.find((l: any) => l.id === b.locationId);
+            const wh = loc ? db.warehouses.find((w: any) => w.id === loc.warehouseId) : null;
+            return {
+              ...b,
+              location: loc ? { ...loc, warehouse: wh } : null,
+            };
+          });
         const totalOnHand = pBals.reduce((s: number, b: any) => s + Number(b.onHand), 0);
         const available = totalOnHand;
         const stockState =
@@ -504,6 +621,34 @@ export async function handleLocalDemoRequest(
           stockState,
         };
       });
+
+    if (search) {
+      orgProducts = orgProducts.filter(
+        (p: any) =>
+          String(p.name || "").toLowerCase().includes(search) ||
+          String(p.sku || "").toLowerCase().includes(search) ||
+          String(p.barcode || "").toLowerCase().includes(search) ||
+          String(p.brand || "").toLowerCase().includes(search)
+      );
+    }
+    if (catFilter) {
+      orgProducts = orgProducts.filter((p: any) => p.categoryId === catFilter);
+    }
+    if (statusFilter && statusFilter !== "all") {
+      orgProducts = orgProducts.filter((p: any) => p.stockState === statusFilter);
+    }
+
+    orgProducts.sort((a: any, b: any) => {
+      const av = a[sortBy] ?? "";
+      const bv = b[sortBy] ?? "";
+      if (typeof av === "number" && typeof bv === "number") {
+        return sortOrder === "asc" ? av - bv : bv - av;
+      }
+      return sortOrder === "asc"
+        ? String(av).localeCompare(String(bv))
+        : String(bv).localeCompare(String(av));
+    });
+
     return {
       data: {
         data: orgProducts,
@@ -522,14 +667,52 @@ export async function handleLocalDemoRequest(
       categoryId: body.categoryId || null,
       baseUnitId: body.baseUnitId || db.units[0].id,
       costPrice: Number(body.costPrice) || 0,
+      salePrice: Number(body.salePrice) || 0,
       reorderLevel: Number(body.reorderLevel) || 5,
-      trackingMode: "STANDARD",
-      isActive: true,
+      trackingMode: body.trackingMode || "STANDARD",
+      imageUrl: body.imageUrl || null,
+      barcode: body.barcode || null,
+      brand: body.brand || null,
+      supplierName: body.supplierName || null,
+      weightKg: body.weightKg !== undefined && body.weightKg !== null ? Number(body.weightKg) : null,
+      dimensionsCm: body.dimensionsCm || null,
+      leadTimeDays: Number(body.leadTimeDays) || 3,
+      specsJson: body.specsJson || {},
+      isActive: body.isActive ?? true,
       createdAt: new Date().toISOString(),
     };
     db.products.unshift(created);
     saveDb(db);
     return { data: { data: created } };
+  }
+
+  if (cleanUrl.startsWith("/products/") && method === "PATCH" && cleanUrl !== "/products/import/csv") {
+    const prodId = cleanUrl.split("/")[2];
+    const existing = db.products.find((p: any) => p.id === prodId);
+    if (existing) {
+      Object.assign(existing, {
+        ...(body.sku !== undefined ? { sku: String(body.sku).toUpperCase() } : {}),
+        ...(body.name !== undefined ? { name: body.name } : {}),
+        ...(body.description !== undefined ? { description: body.description } : {}),
+        ...(body.categoryId !== undefined ? { categoryId: body.categoryId } : {}),
+        ...(body.baseUnitId !== undefined ? { baseUnitId: body.baseUnitId } : {}),
+        ...(body.costPrice !== undefined ? { costPrice: Number(body.costPrice) } : {}),
+        ...(body.salePrice !== undefined ? { salePrice: Number(body.salePrice) } : {}),
+        ...(body.reorderLevel !== undefined ? { reorderLevel: Number(body.reorderLevel) } : {}),
+        ...(body.trackingMode !== undefined ? { trackingMode: body.trackingMode } : {}),
+        ...(body.imageUrl !== undefined ? { imageUrl: body.imageUrl } : {}),
+        ...(body.barcode !== undefined ? { barcode: body.barcode } : {}),
+        ...(body.brand !== undefined ? { brand: body.brand } : {}),
+        ...(body.supplierName !== undefined ? { supplierName: body.supplierName } : {}),
+        ...(body.weightKg !== undefined ? { weightKg: body.weightKg !== null ? Number(body.weightKg) : null } : {}),
+        ...(body.dimensionsCm !== undefined ? { dimensionsCm: body.dimensionsCm } : {}),
+        ...(body.leadTimeDays !== undefined ? { leadTimeDays: Number(body.leadTimeDays) } : {}),
+        ...(body.specsJson !== undefined ? { specsJson: body.specsJson } : {}),
+        ...(body.isActive !== undefined ? { isActive: body.isActive } : {}),
+      });
+      saveDb(db);
+    }
+    return { data: { data: existing } };
   }
 
   if (cleanUrl === "/categories" && method === "GET") {
@@ -867,12 +1050,47 @@ export async function handleLocalDemoRequest(
     let out = 0;
     let totalVal = 0;
     const attentionProducts: any[] = [];
+    const categoryMap = new Map<
+      string,
+      { name: string; code: string; value: number; units: number; productCount: number }
+    >();
+    const productValuations: Array<{
+      id: string;
+      sku: string;
+      name: string;
+      value: number;
+      onHand: number;
+    }> = [];
 
     for (const p of orgProds) {
       const onHand = db.balances
         .filter((b: any) => b.productId === p.id)
         .reduce((s: number, b: any) => s + Number(b.onHand), 0);
-      totalVal += onHand * Number(p.costPrice || 0);
+      const val = Number((onHand * Number(p.costPrice || 0)).toFixed(2));
+      totalVal += val;
+      const cat = db.categories.find((c: any) => c.id === p.categoryId);
+      const catCode = cat?.code || "GEN";
+      const catName = cat?.name || "Général";
+      const entry = categoryMap.get(catCode) || {
+        name: catName,
+        code: catCode,
+        value: 0,
+        units: 0,
+        productCount: 0,
+      };
+      entry.value = Number((entry.value + val).toFixed(2));
+      entry.units = Number((entry.units + onHand).toFixed(2));
+      entry.productCount += 1;
+      categoryMap.set(catCode, entry);
+
+      productValuations.push({
+        id: p.id,
+        sku: p.sku,
+        name: p.name,
+        value: val,
+        onHand,
+      });
+
       if (onHand <= 0) {
         out++;
         attentionProducts.push({
@@ -898,6 +1116,30 @@ export async function handleLocalDemoRequest(
       }
     }
 
+    productValuations.sort((a, b) => b.value - a.value);
+    const denom = Math.max(1, totalVal);
+    let cum = 0;
+    const abcBuckets = {
+      A: { label: "Classe A (Forte valeur)", count: 0, value: 0, share: 0 },
+      B: { label: "Classe B (Valeur moyenne)", count: 0, value: 0, share: 0 },
+      C: { label: "Classe C (Faible valeur)", count: 0, value: 0, share: 0 },
+    };
+    for (const pv of productValuations) {
+      cum += pv.value;
+      const r = cum / denom;
+      const cls = r <= 0.8 || abcBuckets.A.count === 0 ? "A" : r <= 0.95 ? "B" : "C";
+      abcBuckets[cls].count += 1;
+      abcBuckets[cls].value = Number((abcBuckets[cls].value + pv.value).toFixed(2));
+    }
+    for (const k of ["A", "B", "C"] as const) {
+      abcBuckets[k].share = Math.round((abcBuckets[k].value / denom) * 100);
+    }
+
+    const serviceLevelRate =
+      orgProds.length > 0
+        ? Math.round(((orgProds.length - out) / orgProds.length) * 1000) / 10
+        : 100;
+
     return {
       data: {
         data: {
@@ -906,12 +1148,23 @@ export async function handleLocalDemoRequest(
             lowStockCount: low,
             outOfStockCount: out,
             activeWarehousesCount: db.warehouses.filter((w: any) => w.organizationId === org.id).length,
-            periodReceiptsTotal: 42,
-            periodIssuesTotal: 12,
+            periodReceiptsTotal: 76,
+            periodIssuesTotal: 29,
+            periodTransfersTotal: 14,
             estimatedStockValue: Number(totalVal.toFixed(2)),
             costCoverageRatio: 100,
+            serviceLevelRate,
             currency: org.settings.defaultCurrency || "EUR",
           },
+          healthMetrics: {
+            serviceLevelRate,
+            stockAccuracyRate: 99.4,
+            turnoverRatio: 4.8,
+            avgLeadTimeDays: 3.4,
+          },
+          categoryBreakdown: Array.from(categoryMap.values()).sort((a, b) => b.value - a.value),
+          abcAnalysis: [abcBuckets.A, abcBuckets.B, abcBuckets.C],
+          topValuedProducts: productValuations.slice(0, 5),
           kpiDefinitions: {
             activeProductsCount: { formula: "COUNT(products WHERE is_active = true)", period: "Instant T", timezone: org.settings.timezone },
             lowStockCount: { formula: "0 < available <= reorder_level", period: "Instant T", timezone: org.settings.timezone },
@@ -919,10 +1172,13 @@ export async function handleLocalDemoRequest(
             estimatedStockValue: { formula: "SUM(on_hand * cost_price)", period: "Instant T (WAC)", timezone: org.settings.timezone },
           },
           flowSeries: [
-            { date: "J-3", receipts: 20, issues: 4, transfers: 2 },
-            { date: "J-2", receipts: 8, issues: 5, transfers: 0 },
-            { date: "J-1", receipts: 14, issues: 3, transfers: 4 },
-            { date: "Aujourd'hui", receipts: 34, issues: 0, transfers: 0 },
+            { date: "J-6", receipts: 12, issues: 5, transfers: 2, adjustments: 0, netChange: 7 },
+            { date: "J-5", receipts: 6, issues: 8, transfers: 3, adjustments: 1, netChange: -2 },
+            { date: "J-4", receipts: 18, issues: 4, transfers: 1, adjustments: 0, netChange: 14 },
+            { date: "J-3", receipts: 20, issues: 4, transfers: 2, adjustments: 0, netChange: 16 },
+            { date: "J-2", receipts: 8, issues: 5, transfers: 0, adjustments: 0, netChange: 3 },
+            { date: "J-1", receipts: 14, issues: 3, transfers: 4, adjustments: 0, netChange: 11 },
+            { date: "Aujourd'hui", receipts: 34, issues: 6, transfers: 2, adjustments: 0, netChange: 28 },
           ],
           attentionProducts,
           recentMovements: db.movements.slice(0, 8).map((m: any) => ({

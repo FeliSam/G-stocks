@@ -48,6 +48,15 @@ body {
   color: var(--color-text);
   border-radius: var(--radius-card);
   border: 1px solid var(--color-border);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease;
+}
+
+.gstock-card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08),
+    0 4px 10px -6px rgba(15, 23, 42, 0.04);
 }
 
 .gstock-card-elevated {
@@ -70,6 +79,72 @@ body {
   padding: var(--table-density);
 }
 
+@keyframes gstock-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gstock-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes gstock-pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.06);
+  }
+}
+
+.animate-fade-up {
+  animation: gstock-fade-up 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.14) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: gstock-shimmer 2.8s infinite linear;
+}
+
+.animate-pulse-soft {
+  animation: gstock-pulse-soft 2.2s infinite ease-in-out;
+}
+
+/* Scrollbar discrète pour les conteneurs internes */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 9999px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
@@ -80,3 +155,4 @@ body {
     scroll-behavior: auto !important;
   }
 }
+

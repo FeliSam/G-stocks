@@ -141,8 +141,17 @@ export const createProductSchema = z.object({
   categoryId: z.string().uuid().optional().nullable(),
   baseUnitId: z.string().uuid("L'unité de mesure de base est requise"),
   costPrice: z.coerce.number().min(0, "Le prix de revient ne peut pas être négatif").default(0),
+  salePrice: z.coerce.number().min(0, "Le prix de vente ne peut pas être négatif").default(0),
   reorderLevel: z.coerce.number().min(0, "Le seuil d'alerte ne peut pas être négatif").default(5),
   trackingMode: z.enum(["STANDARD", "LOT_EXPIRY", "SERIAL", "VARIANT"]).default("STANDARD"),
+  imageUrl: z.string().max(1500000).optional().nullable(),
+  barcode: z.string().trim().max(64).optional().nullable(),
+  brand: z.string().trim().max(100).optional().nullable(),
+  supplierName: z.string().trim().max(120).optional().nullable(),
+  weightKg: z.coerce.number().min(0).optional().nullable(),
+  dimensionsCm: z.string().trim().max(80).optional().nullable(),
+  leadTimeDays: z.coerce.number().int().min(0).max(365).default(3),
+  specsJson: z.record(z.string(), z.string()).optional(),
   isActive: z.boolean().default(true),
   variants: z
     .array(

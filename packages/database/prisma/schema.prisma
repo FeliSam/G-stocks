@@ -315,8 +315,17 @@ model Product {
   description    String?
   baseUnitId     String   @map("base_unit_id") @db.Uuid
   costPrice      Decimal  @default(0) @map("cost_price") @db.Decimal(18, 4)
+  salePrice      Decimal  @default(0) @map("sale_price") @db.Decimal(18, 4)
   reorderLevel   Decimal  @default(5) @map("reorder_level") @db.Decimal(18, 4)
   trackingMode   String   @default("STANDARD") @map("tracking_mode")
+  imageUrl       String?  @map("image_url")
+  barcode        String?
+  brand          String?
+  supplierName   String?  @map("supplier_name")
+  weightKg       Decimal? @map("weight_kg") @db.Decimal(10, 3)
+  dimensionsCm   String?  @map("dimensions_cm")
+  leadTimeDays   Int      @default(3) @map("lead_time_days")
+  specsJson      Json     @default("{}") @map("specs_json")
   isActive       Boolean  @default(true) @map("is_active")
   createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
